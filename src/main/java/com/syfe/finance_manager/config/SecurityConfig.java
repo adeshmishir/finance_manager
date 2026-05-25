@@ -43,12 +43,8 @@ public class SecurityConfig {
             // Define path authorization rules
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
-            )
-            
-            // Allow frames for H2 Web Console to load properly
-            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
+            );
 
         return http.build();
     }

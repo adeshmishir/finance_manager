@@ -47,8 +47,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT t.category.name, COALESCE(SUM(t.amount), 0) FROM Transaction t " +
            "WHERE t.user.id = :userId " +
            "AND t.category.type = :type " +
-           "AND FUNCTION('MONTH', t.date) = :month " +
-           "AND FUNCTION('YEAR', t.date) = :year " +
+           "AND MONTH(t.date) = :month " +
+           "AND YEAR(t.date) = :year " +
            "GROUP BY t.category.name")
     List<Object[]> sumByCategoryForMonth(
             @Param("userId") Long userId,
@@ -61,8 +61,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT COALESCE(SUM(t.amount), 0) FROM Transaction t " +
            "WHERE t.user.id = :userId " +
            "AND t.category.type = :type " +
-           "AND FUNCTION('MONTH', t.date) = :month " +
-           "AND FUNCTION('YEAR', t.date) = :year")
+           "AND MONTH(t.date) = :month " +
+           "AND YEAR(t.date) = :year")
     BigDecimal sumTotalForMonth(
             @Param("userId") Long userId,
             @Param("type") CategoryType type,
